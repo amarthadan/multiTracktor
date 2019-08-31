@@ -1,0 +1,25 @@
+{
+  "name": "multiTracktor",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "start": "react-native start",
+    "run-android": "react-native run-android",
+    "lint": "eslint --ignore-pattern node_modules --max-warnings=0 ."
+  },
+  "dependencies": {
+    "react": "16.8.6",
+    "react-native": "0.60.5"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.5.5",
+    "@babel/runtime": "^7.5.5",
+    "@react-native-community/eslint-config": "^0.0.5",
+    "babel-eslint": "^10.0.3",
+    "eslint": "^6.3.0",
+    "eslint-config-vacuumlabs": "^1.8.2",
+    "eslint-plugin-import": "^2.18.2",
+    "eslint-plugin-react": "^7.14.3",
+    "metro-react-native-babel-preset": "^0.56.0"
+  }
+}
