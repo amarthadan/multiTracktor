@@ -4876,6 +4876,11 @@ react-native-safe-area-view@^0.14.1:
   dependencies:
     debounce "^1.2.0"
 
+react-native-simple-gauge@^0.2.2:
+  version "0.2.2"
+  resolved "https://registry.yarnpkg.com/react-native-simple-gauge/-/react-native-simple-gauge-0.2.2.tgz#728bbacbf8f49206867001fc2374b8c16970b59a"
+  integrity sha512-njUIIP7WULOoQEzlrzkve2jSGOvgVssEQmYk/FjPw0JpIaUZqaeBElWpMd50gFbeVuQcGpoybzMOot/sN6q2/w==
+
 react-native-tab-view@^2.9.0:
   version "2.10.0"
   resolved "https://registry.yarnpkg.com/react-native-tab-view/-/react-native-tab-view-2.10.0.tgz#5e249e5650502010013449ffd4e5edc18a95364b"

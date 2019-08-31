@@ -1,9 +1,11 @@
 import React from 'react'
 import {Text} from 'react-native'
 
+import MainButton from './MainButton'
+
 const MainScreen = () => {
   return (
-    <Text>Main Screen</Text>
+    <MainButton />
   )
 }
 
