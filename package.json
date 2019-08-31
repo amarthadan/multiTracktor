@@ -8,6 +8,7 @@
     "lint": "eslint --ignore-pattern node_modules --max-warnings=0 ."
   },
   "dependencies": {
+    "@react-native-community/async-storage": "^1.6.1",
     "@react-navigation/core": "^3.5.0",
     "react": "16.8.6",
     "react-native": "0.60.5",
@@ -19,6 +20,7 @@
     "react-redux": "^7.1.1",
     "realm": "^2.29.2",
     "redux": "^4.0.4",
+    "redux-logger": "^3.0.6",
     "uuid": "^3.3.3"
   },
   "devDependencies": {

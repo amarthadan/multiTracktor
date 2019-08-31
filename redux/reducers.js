@@ -1,7 +1,17 @@
 import {combineReducers} from 'redux'
 
-const dummyReducer = (state, action) => state
+import {ACTIONS} from './actions'
+import {getInitialSettings} from './state'
+
+const settingsReducer = (state = getInitialSettings(), action) => {
+  switch (action.type) {
+    case ACTIONS.SETTINGS_UPDATED:
+      return action.payload
+    default:
+      return state
+  }
+}
 
 export default combineReducers({
-  dummyReducer,
+  settings: settingsReducer,
 })
