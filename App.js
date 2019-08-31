@@ -1,10 +1,9 @@
-import React, {Fragment} from 'react'
-import {Text} from 'react-native'
+import React from 'react'
 
-const App = () => (
-  <Fragment>
-    <Text>Welcome to multiTracktor!</Text>
-  </Fragment>
-)
+import AppContainer from './navigation/container'
+
+const App = () => {
+  return (<AppContainer />)
+}
 
 export default App
