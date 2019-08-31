@@ -1,5 +1,5 @@
 import React, {useState} from 'react'
-import {TouchableOpacity, Text} from 'react-native'
+import {TouchableOpacity, Text, View} from 'react-native'
 
 import {GaugeProgress} from 'react-native-simple-gauge'
 
@@ -12,19 +12,21 @@ const MainButton = () => {
   const [visited, setVisited] = useState(0)
 
   return (
-     <GaugeProgress
-       size={buttonSize + gaugeWidth * 2}
-       width={gaugeWidth}
-       fill={percentage(visited, all)}
-       cropDegree={180}
-       tintColor="#4682b4"
-       backgroundColor="#b0c4de">
-        <TouchableOpacity
-          style={styles.mainButton}
-          onPress={() => {}}>
-          <Text>Main Button</Text>
-        </TouchableOpacity>
-      </GaugeProgress>
+     <View style={styles.mainButton}>
+       <GaugeProgress
+         size={buttonSize + gaugeWidth * 2}
+         width={gaugeWidth}
+         fill={percentage(visited, all)}
+         cropDegree={180}
+         tintColor="#4682b4"
+         backgroundColor="#b0c4de">
+          <TouchableOpacity
+            style={styles.innerButton}
+            onPress={() => {}}>
+            <Text>Main Button</Text>
+          </TouchableOpacity>
+        </GaugeProgress>
+      </View>
   )
 }
 
