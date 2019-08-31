@@ -14,7 +14,9 @@
     "react-native-gesture-handler": "^1.4.1",
     "react-native-reanimated": "^1.2.0",
     "react-navigation": "^4.0.0",
-    "react-navigation-tabs": "^2.3.0"
+    "react-navigation-tabs": "^2.3.0",
+    "realm": "^2.29.2",
+    "uuid": "^3.3.3"
   },
   "devDependencies": {
     "@babel/core": "^7.5.5",
