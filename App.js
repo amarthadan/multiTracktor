@@ -1,15 +1,12 @@
 import React from 'react'
-import {Provider} from 'react-redux'
 
-import store from './redux/store'
+import {useInitializeSettings} from './hooks/settings'
 import AppContainer from './navigation/container'
 
 const App = () => {
-  return (
-    <Provider store={store}>
-      <AppContainer />
-    </Provider>
-  )
+  useInitializeSettings()
+
+  return (<AppContainer />)
 }
 
 export default App

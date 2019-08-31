@@ -1,13 +1,18 @@
-import {createStore} from 'redux'
+import {applyMiddleware, createStore} from 'redux'
+import logger from 'redux-logger'
 
 import rootReducer from './reducers'
+import {getInitialState} from './state'
 
-const initialState = () => (
-  {
-  }
-)
+const middlewares = []
+
+// eslint-disable-next-line no-undef
+if (__DEV__) {
+  middlewares.push(logger)
+}
 
 export default createStore(
   rootReducer,
-  initialState()
+  getInitialState(),
+  applyMiddleware(...middlewares)
 )
