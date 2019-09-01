@@ -1,20 +1,31 @@
 import {createAppContainer} from 'react-navigation'
 import {createMaterialTopTabNavigator} from 'react-navigation-tabs'
+import {createStackNavigator} from 'react-navigation-stack'
 
-import routes from './routes'
+import {ROOT, MAIN} from './routes'
 import MainScreen from '../components/MainScreen'
 import CalendarScreen from '../components/CalendarScreen'
+import SettingsScreen from '../components/SettingsScreen'
 
-const TabNavigator = createMaterialTopTabNavigator(
+const MainNavigator = createStackNavigator({
+  [ROOT.MAIN]: {
+    screen: MainScreen,
+    navigationOptions: () => ({
+      header: null}),
+  },
+  [MAIN.SETTINGS]: SettingsScreen,
+})
+
+const RootNavigator = createMaterialTopTabNavigator(
   {
-    [routes.MAIN]: MainScreen,
-    [routes.CALENDAR]: CalendarScreen,
+    [ROOT.MAIN]: MainNavigator,
+    [ROOT.CALENDAR]: CalendarScreen,
   },
   {
     tabBarComponent: () => null,
   }
 )
 
-const AppContainer = createAppContainer(TabNavigator)
+const AppContainer = createAppContainer(RootNavigator)
 
 export default AppContainer
