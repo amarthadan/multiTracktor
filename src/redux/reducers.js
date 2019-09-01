@@ -6,7 +6,7 @@ import {getInitialSettings} from './state'
 const settingsReducer = (state = getInitialSettings(), action) => {
   switch (action.type) {
     case ACTIONS.SETTINGS_UPDATED:
-      return action.payload
+      return {...state, ...action.payload}
     default:
       return state
   }
