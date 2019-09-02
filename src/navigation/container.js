@@ -6,6 +6,7 @@ import {ROOT, MAIN} from './routes'
 import MainScreen from '../components/MainScreen'
 import CalendarScreen from '../components/CalendarScreen'
 import SettingsScreen from '../components/SettingsScreen'
+import NewEventScreen from '../components/NewEventScreen'
 
 const MainNavigator = createStackNavigator({
   [ROOT.MAIN]: {
@@ -14,6 +15,7 @@ const MainNavigator = createStackNavigator({
       header: null}),
   },
   [MAIN.SETTINGS]: SettingsScreen,
+  [MAIN.NEW_EVENT]: NewEventScreen,
 })
 
 const RootNavigator = createMaterialTopTabNavigator(

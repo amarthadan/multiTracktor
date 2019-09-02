@@ -5,4 +5,5 @@ export const ROOT = {
 
 export const MAIN = {
   SETTINGS: 'Settings',
+  NEW_EVENT: 'NewEvent',
 }
