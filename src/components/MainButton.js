@@ -7,7 +7,7 @@ import styles, {buttonSize, gaugeWidth} from './MainButton.style'
 
 const percentage = (f, s) => f / s * 100 || 0
 
-const MainButton = () => {
+const MainButton = ({onPress}) => {
   const all = 2
   const [visited] = useState(1)
 
@@ -23,6 +23,7 @@ const MainButton = () => {
       >
         <TouchableOpacity
           style={styles.innerButton}
+          onPress={onPress}
         >
           <Text>Main Button</Text>
         </TouchableOpacity>
