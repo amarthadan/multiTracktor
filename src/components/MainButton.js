@@ -8,7 +8,7 @@ import {COLORS} from '../constants'
 
 const percentage = (f, s) => f / s * 100 || 0
 
-const MainButton = () => {
+const MainButton = ({onPress}) => {
   const all = 2
   const [visited] = useState(1)
 
@@ -25,6 +25,7 @@ const MainButton = () => {
       >
         <TouchableOpacity
           style={styles.innerButton}
+          onPress={onPress}
         >
           <Text style={styles.buttonText}>Main Button</Text>
         </TouchableOpacity>
