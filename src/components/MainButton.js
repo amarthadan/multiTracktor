@@ -4,6 +4,7 @@ import {TouchableOpacity, Text, View} from 'react-native'
 import {GaugeProgress} from 'react-native-simple-gauge'
 
 import styles, {buttonSize, gaugeWidth} from './MainButton.style'
+import {COLORS} from '../constants'
 
 const percentage = (f, s) => f / s * 100 || 0
 
@@ -18,13 +19,14 @@ const MainButton = () => {
         width={gaugeWidth}
         fill={percentage(visited, all)}
         cropDegree={180}
-        tintColor="#4682b4"
-        backgroundColor="#b0c4de"
+        tintColor={COLORS.secondary.normal}
+        backgroundColor={COLORS.secondary.light}
+        strokeCap="circle"
       >
         <TouchableOpacity
           style={styles.innerButton}
         >
-          <Text>Main Button</Text>
+          <Text style={styles.buttonText}>Main Button</Text>
         </TouchableOpacity>
       </GaugeProgress>
     </View>
