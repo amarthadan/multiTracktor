@@ -1,4 +1,5 @@
 import {Dimensions, StyleSheet} from 'react-native'
+import {COLORS} from '../constants'
 
 export const buttonSize =
   Math.min(
@@ -6,7 +7,7 @@ export const buttonSize =
     Dimensions.get('window').height
   ) / 2
 
-export const gaugeWidth = 20
+export const gaugeWidth = 40
 
 export default StyleSheet.create({
   innerButton: {
@@ -14,7 +15,7 @@ export default StyleSheet.create({
     width: buttonSize,
     height: buttonSize,
     borderRadius: buttonSize,
-    backgroundColor: '#DDDDDD',
+    backgroundColor: COLORS.primary.normal,
     alignItems: 'center',
     justifyContent: 'center',
     top: gaugeWidth,
@@ -23,5 +24,8 @@ export default StyleSheet.create({
   mainButton: {
     alignItems: 'center',
     padding: 10,
+  },
+  buttonText: {
+    color: COLORS.primary.text,
   },
 })
