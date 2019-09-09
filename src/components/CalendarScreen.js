@@ -1,9 +1,13 @@
 import React from 'react'
-import {Text} from 'react-native'
+
+import {CalendarList} from 'react-native-calendars'
 
 const CalendarScreen = () => {
   return (
-    <Text>Calendar Screen</Text>
+    <CalendarList
+      pastScrollRange={3}
+      futureScrollRange={0}
+    />
   )
 }
 
