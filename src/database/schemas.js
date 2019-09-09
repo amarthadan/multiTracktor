@@ -26,9 +26,13 @@ export const PlaceSchema = {
 
 export const PositionSchema = {
   name: NAMES.POSITION,
+  primaryKey: 'id',
   properties: {
+    id: 'string',
     lat: 'double',
     long: 'double',
     place: NAMES.PLACE,
   },
 }
+
+export const schemas = [EventSchema, PlaceSchema, PositionSchema]
