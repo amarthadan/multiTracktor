@@ -1,9 +1,14 @@
 import React from 'react'
-import {Text} from 'react-native'
+import {View} from 'react-native'
+
+import NewEventButton from './NewEventButton'
 
 const NewEventScreen = () => {
+
   return (
-    <Text>NewEvent Screen</Text>
+    <View>
+      <NewEventButton lat={0.0} long={0.0} />
+    </View>
   )
 }
 
