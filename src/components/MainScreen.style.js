@@ -10,5 +10,5 @@ export default StyleSheet.create({
   },
   mainButton: {
     flex: 2,
-  }
+  },
 })
