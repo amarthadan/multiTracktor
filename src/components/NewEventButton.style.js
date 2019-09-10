@@ -1,11 +1,19 @@
 import {StyleSheet} from 'react-native'
 
 export default StyleSheet.create({
-  button: {
-    backgroundColor: '#558855',
+  wrapper: {
+    backgroundColor: '#b8f2d9',
     margin: 10,
+    flexDirection: 'row',
+  },
+  inputWrapper: {
+    flex: 4,
+  },
+  moreOptionsButton: {
+    backgroundColor: '#77c9d8',
+    flex: 1,
   },
   input: {
-    width: 200,
+    width: 150,
   },
 })
