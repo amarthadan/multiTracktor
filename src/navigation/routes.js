@@ -7,6 +7,7 @@ export const ROOT = {
 export const MAIN = {
   SETTINGS: 'Settings',
   NEW_EVENT: 'NewEvent',
+  SELECT_PLACE: 'SelectPlace',
 }
 
 export const EVENTS = {

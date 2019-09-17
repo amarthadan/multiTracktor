@@ -9,6 +9,7 @@ import SettingsScreen from '../components/SettingsScreen'
 import NewEventScreen from '../components/NewEventScreen'
 import EventScreen from '../components/EventScreen'
 import EventsScreen from '../components/EventsScreen'
+import SelectPlaceScreen from '../components/SelectPlaceScreen'
 
 const MainNavigator = createStackNavigator({
   [ROOT.MAIN]: {
@@ -18,6 +19,7 @@ const MainNavigator = createStackNavigator({
   },
   [MAIN.SETTINGS]: SettingsScreen,
   [MAIN.NEW_EVENT]: NewEventScreen,
+  [MAIN.SELECT_PLACE]: SelectPlaceScreen,
 })
 
 const EventsNavigator = createStackNavigator({

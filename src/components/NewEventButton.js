@@ -4,16 +4,22 @@ import DateTimePicker from 'react-native-modal-datetime-picker'
 import Realm from 'realm'
 import uuid from 'uuid'
 import {format, getTime} from 'date-fns'
+import {useNavigation} from 'react-navigation-hooks'
+import {useSelector} from 'react-redux'
 
+import {MAIN} from '../navigation/routes'
 import {schemas} from '../database/schemas'
+import {selectedCoordinatesSelector} from '../redux/selectors'
 
 import style from './NewEventButton.style'
 
-const NewEventScreen = ({lat, long}) => {
+const NewEventScreen = () => {
+  const {navigate} = useNavigation()
   const [moreOptions, setMoreOptions] = useState(false)
   const [dateTimePicker, setDateTimePicker] = useState(false)
   const [placeName, setPlaceName] = useState('')
   const [date, setDate] = useState(new Date())
+  const [long, lat] = useSelector(selectedCoordinatesSelector)
 
   const onPress = async () => {
     const realm = await Realm.open({schema: schemas})
@@ -69,6 +75,10 @@ const NewEventScreen = ({lat, long}) => {
                 mode={'datetime'}
                 is24Hour
               />
+              <TouchableOpacity onPress={() => navigate(MAIN.SELECT_PLACE)}>
+                <Text>Lat: {lat}</Text>
+                <Text>Long: {long}</Text>
+              </TouchableOpacity>
             </View>
           }
         </TouchableOpacity>

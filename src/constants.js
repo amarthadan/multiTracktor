@@ -20,3 +20,5 @@ export const COLORS = {
     text: '#000000',
   },
 }
+
+export const DEFAULT_COORDINATES = [16.606836, 49.195061] // [long, lat]
