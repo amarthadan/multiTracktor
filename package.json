@@ -10,6 +10,7 @@
   "dependencies": {
     "@react-native-community/async-storage": "^1.6.1",
     "@react-native-community/slider": "^2.0.0",
+    "@react-native-mapbox-gl/maps": "^7.0.4",
     "@react-navigation/core": "^3.5.0",
     "date-fns": "^2.1.0",
     "react": "16.8.6",

@@ -1,7 +1,7 @@
 import {combineReducers} from 'redux'
 
 import {ACTIONS} from './actions'
-import {getInitialSettings} from './state'
+import {getInitialSettings, getInitialNewEvent} from './state'
 
 const settingsReducer = (state = getInitialSettings(), action) => {
   switch (action.type) {
@@ -12,6 +12,16 @@ const settingsReducer = (state = getInitialSettings(), action) => {
   }
 }
 
+const newEventReducer = (state = getInitialNewEvent(), action) => {
+  switch (action.type) {
+    case ACTIONS.COORDINATES_SELECTED:
+      return {...state, selectedCoordinates: action.payload}
+    default:
+      return state
+  }
+}
+
 export default combineReducers({
   settings: settingsReducer,
+  newEvent: newEventReducer,
 })
