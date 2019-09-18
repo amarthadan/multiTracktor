@@ -1,9 +1,14 @@
 import React, {useEffect, useState} from 'react'
 import {View, Text} from 'react-native'
 import {useNavigation} from 'react-navigation-hooks'
+import MapboxGL from '@react-native-mapbox-gl/maps'
 import Realm from 'realm'
 
+import {formatTimestamp} from '../helpers/formatting'
+import {mapCenterFromPoints} from '../helpers/maps'
 import {schemas, NAMES} from '../database/schemas'
+
+import style from './EventScreen.style'
 
 const EventScreen = () => {
   const {getParam} = useNavigation()
@@ -13,30 +18,33 @@ const EventScreen = () => {
   useEffect(() => {
     const loadEvent = async () => {
       const realm = await Realm.open({schema: schemas})
-      const dbEvent = realm.objectForPrimaryKey(NAMES.EVENT, eventId)
-      setEvent(dbEvent)
+      setEvent(realm.objectForPrimaryKey(NAMES.EVENT, eventId))
     }
 
     loadEvent()
   }, [eventId])
 
   return (
-    <View>
+    <View style={style.wrapper}>
       {event &&
-      <View>
-        <Text>{event.id}</Text>
-        <Text>{event.timestamp}</Text>
-        <Text>Place:</Text>
-        <Text>{event.place.id}</Text>
-        <Text>{event.place.name}</Text>
-        {event.place.positions.map((position) => (
-          <View key={position.id}>
-            <Text>Position:</Text>
-            <Text>{position.id}</Text>
-            <Text>{position.lat}</Text>
-            <Text>{position.long}</Text>
-          </View>
-        ))}
+      <View style={style.wrapper}>
+        <Text style={style.place}>{event.place.name}</Text>
+        <Text style={style.dateTime}>{formatTimestamp(event.timestamp)}</Text>
+        <MapboxGL.MapView style={style.map}>
+          <MapboxGL.Camera
+            centerCoordinate={mapCenterFromPoints(event.place.positions)}
+            zoomLevel={14}
+          />
+          {event.place.positions.map(
+            (position) => (
+              <MapboxGL.PointAnnotation
+                key={position.id}
+                id={position.id}
+                coordinate={[position.longitude, position.latitude]}
+              />
+            )
+          )}
+        </MapboxGL.MapView>
       </View>
       }
     </View>

@@ -19,7 +19,7 @@ const NewEventScreen = () => {
   const [dateTimePicker, setDateTimePicker] = useState(false)
   const [placeName, setPlaceName] = useState('')
   const [date, setDate] = useState(new Date())
-  const [long, lat] = useSelector(selectedCoordinatesSelector)
+  const [longitude, latitude] = useSelector(selectedCoordinatesSelector)
 
   const onPress = async () => {
     const realm = await Realm.open({schema: schemas})
@@ -34,8 +34,8 @@ const NewEventScreen = () => {
       })
       const position = realm.create('Position', {
         id: uuid(),
-        lat,
-        long,
+        latitude,
+        longitude,
       })
 
       position.place = place
@@ -76,8 +76,8 @@ const NewEventScreen = () => {
                 is24Hour
               />
               <TouchableOpacity onPress={() => navigate(MAIN.SELECT_PLACE)}>
-                <Text>Lat: {lat}</Text>
-                <Text>Long: {long}</Text>
+                <Text>Lat: {latitude}</Text>
+                <Text>Long: {longitude}</Text>
               </TouchableOpacity>
             </View>
           }

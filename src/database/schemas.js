@@ -29,8 +29,8 @@ export const PositionSchema = {
   primaryKey: 'id',
   properties: {
     id: 'string',
-    lat: 'double',
-    long: 'double',
+    latitude: 'double',
+    longitude: 'double',
     place: NAMES.PLACE,
   },
 }
