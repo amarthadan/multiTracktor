@@ -13,6 +13,7 @@
     "@react-native-mapbox-gl/maps": "^7.0.4",
     "@react-navigation/core": "^3.5.0",
     "date-fns": "^2.1.0",
+    "geolib": "^3.0.4",
     "react": "16.8.6",
     "react-native": "0.60.5",
     "react-native-calendars": "^1.212.0",
