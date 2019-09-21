@@ -1,7 +1,12 @@
 import {combineReducers} from 'redux'
 
 import {ACTIONS} from './actions'
-import {getInitialSettings, getInitialNewEvent, getInitialLocationPermissionsGranted} from './state'
+import {
+  getInitialSettings,
+  getInitialNewEvent,
+  getInitialLocationPermissionsGranted,
+  getInitialCurrentPosition,
+} from './state'
 
 const settingsReducer = (state = getInitialSettings(), action) => {
   switch (action.type) {
@@ -31,8 +36,18 @@ const locationPermissionsGrantedReducer =
     }
   }
 
+const currentPositionReducer = (state = getInitialCurrentPosition(), action) => {
+  switch (action.type) {
+    case ACTIONS.CURRENT_POSITION_UPDATED:
+      return {...state, ...action.payload}
+    default:
+      return state
+  }
+}
+
 export default combineReducers({
   settings: settingsReducer,
   newEvent: newEventReducer,
   locationPermissionsGranted: locationPermissionsGrantedReducer,
+  currentPosition: currentPositionReducer,
 })

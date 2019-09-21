@@ -2,6 +2,7 @@ export const ACTIONS = {
   SETTINGS_UPDATED: 'Settings updated',
   COORDINATES_SELECTED: 'Coordinates selected',
   LOCATION_PERMISSION_GRANTED_CHANGED: 'Location permission granted changed',
+  CURRENT_POSITION_UPDATED: 'Current position updated',
 }
 
 export const settingsUpdated = (settings) => (
@@ -24,3 +25,12 @@ export const locationPermissionGrantedChanged = (granted) => (
     payload: granted,
   }
 )
+
+export const currentPositionUpdated = (position) => {
+  const {latitude, longitude} = position.coords
+
+  return {
+    type: ACTIONS.CURRENT_POSITION_UPDATED,
+    payload: {latitude, longitude},
+  }
+}
