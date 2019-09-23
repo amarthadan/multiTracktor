@@ -1,15 +1,16 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 import {View, TouchableOpacity, TextInput, Text} from 'react-native'
+import {useSelector, useDispatch} from 'react-redux'
+import {useNavigation} from 'react-navigation-hooks'
 import DateTimePicker from 'react-native-modal-datetime-picker'
 import Realm from 'realm'
 import uuid from 'uuid'
 import {format, getTime} from 'date-fns'
-import {useNavigation} from 'react-navigation-hooks'
-import {useSelector} from 'react-redux'
 
 import {MAIN} from '../navigation/routes'
 import {schemas} from '../database/schemas'
-import {selectedCoordinatesSelector} from '../redux/selectors'
+import {selectedCoordinatesSelector, currentPositionSelector} from '../redux/selectors'
+import {coordinatesSelected} from '../redux/actions'
 
 import style from './NewEventButton.style'
 
@@ -19,7 +20,24 @@ const NewEventScreen = () => {
   const [dateTimePicker, setDateTimePicker] = useState(false)
   const [placeName, setPlaceName] = useState('')
   const [date, setDate] = useState(new Date())
-  const [longitude, latitude] = useSelector(selectedCoordinatesSelector)
+  const [latitude, setLatitude] = useState()
+  const [longitude, setLongitude] = useState()
+  const dispatch = useDispatch()
+
+  const selectedCoordinates = useSelector(selectedCoordinatesSelector)
+  const currentPosition = useSelector(currentPositionSelector)
+
+  useEffect(() => {
+    if (selectedCoordinates) {
+      setLatitude(selectedCoordinates.latitude)
+      setLongitude(selectedCoordinates.longitude)
+    } else {
+      if (currentPosition) {
+        setLatitude(currentPosition.latitude)
+        setLongitude(currentPosition.longitude)
+      }
+    }
+  }, [currentPosition, selectedCoordinates])
 
   const onPress = async () => {
     const realm = await Realm.open({schema: schemas})
@@ -41,6 +59,8 @@ const NewEventScreen = () => {
       position.place = place
       event.place = place
     })
+
+    dispatch(coordinatesSelected(null))
   }
 
   const toggleMoreOptions = () => setMoreOptions(!moreOptions)
