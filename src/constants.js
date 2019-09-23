@@ -23,4 +23,13 @@ export const COLORS = {
 
 export const DATETIME_FORMAT = 'dd.MM.yyyy HH:mm'
 
-export const DEFAULT_COORDINATES = [16.606836, 49.195061] // [long, lat]
+export const DEFAULT_COORDINATES = {
+  longitude: 18,
+  latitude: 49,
+}
+
+export const ZOOM_LEVEL = {
+  gpsPosition: 12,
+  ipPosition: 10,
+  defaultPositon: 5,
+}

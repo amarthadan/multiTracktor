@@ -12,12 +12,19 @@ export const settingsUpdated = (settings) => (
   }
 )
 
-export const coordinatesSelected = (coordinates) => (
-  {
-    type: ACTIONS.COORDINATES_SELECTED,
-    payload: coordinates,
+export const coordinatesSelected = (coordinates) => {
+  let payload = null
+
+  if (coordinates) {
+    const [longitude, latitude] = coordinates
+    payload = {latitude, longitude}
   }
-)
+
+  return {
+    type: ACTIONS.COORDINATES_SELECTED,
+    payload,
+  }
+}
 
 export const locationPermissionGrantedChanged = (granted) => (
   {

@@ -1,8 +1,6 @@
-import {DEFAULT_COORDINATES} from '../constants'
-
 export const getInitialSettings = () => ({})
 
-const getInitialSelectedCoordinates = () => (DEFAULT_COORDINATES)
+const getInitialSelectedCoordinates = () => null
 
 export const getInitialNewEvent = () => (
   {
