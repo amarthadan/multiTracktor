@@ -1,6 +1,6 @@
-import React, {useState, useEffect} from 'react'
+import React, {useState} from 'react'
 import {View, TouchableOpacity, TextInput, Text} from 'react-native'
-import {useSelector, useDispatch} from 'react-redux'
+import {useDispatch} from 'react-redux'
 import {useNavigation} from 'react-navigation-hooks'
 import DateTimePicker from 'react-native-modal-datetime-picker'
 import Realm from 'realm'
@@ -9,35 +9,17 @@ import {format, getTime} from 'date-fns'
 
 import {MAIN} from '../navigation/routes'
 import {schemas} from '../database/schemas'
-import {selectedCoordinatesSelector, currentPositionSelector} from '../redux/selectors'
 import {coordinatesSelected} from '../redux/actions'
 
 import style from './NewEventButton.style'
 
-const NewEventScreen = () => {
+const NewEventScreen = ({latitude, longitude}) => {
   const {navigate} = useNavigation()
   const [moreOptions, setMoreOptions] = useState(false)
   const [dateTimePicker, setDateTimePicker] = useState(false)
   const [placeName, setPlaceName] = useState('')
   const [date, setDate] = useState(new Date())
-  const [latitude, setLatitude] = useState()
-  const [longitude, setLongitude] = useState()
   const dispatch = useDispatch()
-
-  const selectedCoordinates = useSelector(selectedCoordinatesSelector)
-  const currentPosition = useSelector(currentPositionSelector)
-
-  useEffect(() => {
-    if (selectedCoordinates) {
-      setLatitude(selectedCoordinates.latitude)
-      setLongitude(selectedCoordinates.longitude)
-    } else {
-      if (currentPosition) {
-        setLatitude(currentPosition.latitude)
-        setLongitude(currentPosition.longitude)
-      }
-    }
-  }, [currentPosition, selectedCoordinates])
 
   const onPress = async () => {
     const realm = await Realm.open({schema: schemas})
@@ -96,8 +78,7 @@ const NewEventScreen = () => {
                 is24Hour
               />
               <TouchableOpacity onPress={() => navigate(MAIN.SELECT_PLACE)}>
-                <Text>Lat: {latitude}</Text>
-                <Text>Long: {longitude}</Text>
+                <Text>Select place</Text>
               </TouchableOpacity>
             </View>
           }
