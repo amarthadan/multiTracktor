@@ -1,11 +1,14 @@
-import {getCenterOfBounds} from 'geolib'
+import {getCenterOfBounds, findNearest, getDistance} from 'geolib'
 
-export const mapCenterFromPoints = (realmResult) => {
-  const points = Array.from(realmResult)
-  if (points.length === 0) {
-    return []
-  }
-
-  const center = getCenterOfBounds(points)
+export const mapCenterFromPoints = (realmPositions) => {
+  const positions = Array.from(realmPositions)
+  const center = getCenterOfBounds(positions)
   return [center.longitude, center.latitude]
+}
+
+export const distanceFromNearest = (position, realmPositions) => {
+  const positions = Array.from(realmPositions)
+  const nearest = findNearest(position, positions)
+
+  return getDistance(position, nearest)
 }
