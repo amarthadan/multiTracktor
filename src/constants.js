@@ -33,3 +33,5 @@ export const ZOOM_LEVEL = {
   ipPosition: 10,
   defaultPositon: 5,
 }
+
+export const POSITION_RADIUS = 100
