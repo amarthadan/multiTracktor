@@ -8,12 +8,14 @@ import uuid from 'uuid'
 import {format, getTime} from 'date-fns'
 
 import {MAIN} from '../navigation/routes'
+import {POSITION_RADIUS} from '../constants'
 import {schemas, NAMES} from '../database/schemas'
 import {coordinatesSelected} from '../redux/actions'
+import {distanceFromNearest} from '../helpers/maps'
 
 import style from './NewEventButton.style'
 
-const NewEventButton = ({latitude, longitude, placeId, placeName}) => {
+const NewEventButton = ({coordinates, placeId, placeName}) => {
   const {navigate, goBack} = useNavigation()
   const [moreOptions, setMoreOptions] = useState(false)
   const [dateTimePicker, setDateTimePicker] = useState(false)
@@ -36,21 +38,21 @@ const NewEventButton = ({latitude, longitude, placeId, placeName}) => {
   const onPress = async () => {
     const realm = await Realm.open({schema: schemas})
     realm.write(() => {
-      const event = realm.create('Event', {
+      const event = realm.create(NAMES.EVENT, {
         id: uuid(),
         timestamp: getTime(date),
       })
 
       if (!place) {
-        const newPlace = realm.create('Place', {
+        const newPlace = realm.create(NAMES.PLACE, {
           id: uuid(),
           name: newPlaceName,
         })
 
-        const position = realm.create('Position', {
+        const position = realm.create(NAMES.POSITION, {
           id: uuid(),
-          latitude,
-          longitude,
+          latitude: coordinates.latitude,
+          longitude: coordinates.longitude,
         })
 
         position.place = newPlace
@@ -58,6 +60,18 @@ const NewEventButton = ({latitude, longitude, placeId, placeName}) => {
         return
       }
 
+      if (coordinates) {
+        const distance = distanceFromNearest(coordinates, place.positions)
+        if (distance > POSITION_RADIUS) {
+          const position = realm.create(NAMES.POSITION, {
+            id: uuid(),
+            latitude: coordinates.latitude,
+            longitude: coordinates.longitude,
+          })
+
+          position.place = place
+        }
+      }
       event.place = place
     })
 
