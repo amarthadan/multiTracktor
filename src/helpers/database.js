@@ -1,5 +1,5 @@
 import uuid from 'uuid'
-import {getTime} from 'date-fns'
+import {getTime, startOfDay, endOfDay} from 'date-fns'
 import Realm from 'realm'
 
 import {POSITION_RADIUS} from '../constants'
@@ -35,6 +35,17 @@ const writePosition = (db, coordinates) => {
 export const getEvent = async (eventId) => {
   const db = await openDB()
   return db.objectForPrimaryKey(NAMES.EVENT, eventId)
+}
+
+export const isEventOnDate = async (date) => {
+  const db = await openDB()
+  const events = db.objects(NAMES.EVENT).filtered(
+    'timestamp >= $0 AND timestamp <= $1',
+    getTime(startOfDay(date)),
+    getTime(endOfDay(date))
+  )
+
+  return events.length >= 1
 }
 
 export const getEvents = async () => {
