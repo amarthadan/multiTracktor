@@ -1,19 +1,13 @@
-import React, {useState, useCallback} from 'react'
+import React, {useState} from 'react'
 import {View, FlatList} from 'react-native'
-import Realm from 'realm'
 import {NavigationEvents} from 'react-navigation'
 
-import {schemas, NAMES} from '../database/schemas'
+import {getEvents} from '../helpers/database'
 import EventButton from './EventButton'
 
 const EventsScreen = () => {
   const [events, setEvents] = useState([])
-
-  const loadEvents = useCallback(async () => {
-    const realm = await Realm.open({schema: schemas})
-    const dbEvents = realm.objects(NAMES.EVENT)
-    setEvents(dbEvents)
-  }, [])
+  const loadEvents = async () => setEvents(await getEvents())
 
   return (
     <View>

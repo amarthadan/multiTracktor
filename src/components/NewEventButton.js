@@ -1,17 +1,14 @@
-import React, {useState, useEffect} from 'react'
+import React, {useState} from 'react'
 import {View, TouchableOpacity, TextInput, Text} from 'react-native'
 import {useDispatch} from 'react-redux'
 import {useNavigation} from 'react-navigation-hooks'
 import DateTimePicker from 'react-native-modal-datetime-picker'
-import Realm from 'realm'
-import uuid from 'uuid'
-import {format, getTime} from 'date-fns'
+import {format} from 'date-fns'
 
 import {MAIN} from '../navigation/routes'
-import {POSITION_RADIUS} from '../constants'
-import {schemas, NAMES} from '../database/schemas'
 import {coordinatesSelected} from '../redux/actions'
-import {distanceFromNearest} from '../helpers/maps'
+import {usePlace} from '../hooks/database'
+import {saveEvent, saveEventWithPlace} from '../helpers/database'
 
 import style from './NewEventButton.style'
 
@@ -21,59 +18,13 @@ const NewEventButton = ({coordinates, placeId, placeName}) => {
   const [dateTimePicker, setDateTimePicker] = useState(false)
   const [newPlaceName, setNewPlaceName] = useState('')
   const [date, setDate] = useState(new Date())
-  const [place, setPlace] = useState()
+  const place = usePlace(placeId)
   const dispatch = useDispatch()
 
-  useEffect(() => {
-    const loadPlace = async () => {
-      const realm = await Realm.open({schema: schemas})
-      setPlace(realm.objectForPrimaryKey(NAMES.PLACE, placeId))
-    }
-
-    if (placeId) {
-      loadPlace()
-    }
-  }, [placeId])
-
   const onPress = async () => {
-    const realm = await Realm.open({schema: schemas})
-    realm.write(() => {
-      const event = realm.create(NAMES.EVENT, {
-        id: uuid(),
-        timestamp: getTime(date),
-      })
-
-      if (!place) {
-        const newPlace = realm.create(NAMES.PLACE, {
-          id: uuid(),
-          name: newPlaceName,
-        })
-
-        const position = realm.create(NAMES.POSITION, {
-          id: uuid(),
-          latitude: coordinates.latitude,
-          longitude: coordinates.longitude,
-        })
-
-        position.place = newPlace
-        event.place = newPlace
-        return
-      }
-
-      if (coordinates) {
-        const distance = distanceFromNearest(coordinates, place.positions)
-        if (distance > POSITION_RADIUS) {
-          const position = realm.create(NAMES.POSITION, {
-            id: uuid(),
-            latitude: coordinates.latitude,
-            longitude: coordinates.longitude,
-          })
-
-          position.place = place
-        }
-      }
-      event.place = place
-    })
+    place
+      ? await saveEventWithPlace(date, coordinates, place)
+      : await saveEvent(date, coordinates, newPlaceName)
 
     dispatch(coordinatesSelected(null))
     goBack()
