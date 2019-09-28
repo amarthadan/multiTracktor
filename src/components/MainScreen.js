@@ -8,7 +8,7 @@ import MainButton from './MainButton'
 import styles from './MainScreen.style'
 
 const MainScreen = () => {
-  const navigation = useNavigation()
+  const {navigate} = useNavigation()
 
   return (
     <View style={styles.mainView}>
@@ -16,10 +16,10 @@ const MainScreen = () => {
         <WeekOverview />
       </View>
       <View style={styles.mainButton}>
-        <MainButton onPress={() => navigation.navigate(MAIN.NEW_EVENT)} />
+        <MainButton onPress={() => navigate(MAIN.NEW_EVENT)} />
       </View>
       <View>
-        <TouchableOpacity onPress={() => navigation.navigate(MAIN.SETTINGS)}>
+        <TouchableOpacity onPress={() => navigate(MAIN.SETTINGS)}>
           <Text>Settings</Text>
         </TouchableOpacity>
       </View>

@@ -1,28 +1,17 @@
-import React, {useEffect, useState} from 'react'
+import React from 'react'
 import {View, Text} from 'react-native'
 import {useNavigation} from 'react-navigation-hooks'
 import MapboxGL from '@react-native-mapbox-gl/maps'
-import Realm from 'realm'
 
 import {formatTimestamp} from '../helpers/formatting'
 import {mapCenterFromPoints} from '../helpers/maps'
-import {schemas, NAMES} from '../database/schemas'
+import {useEvent} from '../hooks/database'
 
 import style from './EventScreen.style'
 
 const EventScreen = () => {
   const {getParam} = useNavigation()
-  const eventId = getParam('eventId')
-  const [event, setEvent] = useState(null)
-
-  useEffect(() => {
-    const loadEvent = async () => {
-      const realm = await Realm.open({schema: schemas})
-      setEvent(realm.objectForPrimaryKey(NAMES.EVENT, eventId))
-    }
-
-    loadEvent()
-  }, [eventId])
+  const event = useEvent(getParam('eventId'))
 
   return (
     <View style={style.wrapper}>
