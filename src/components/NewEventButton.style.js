@@ -17,3 +17,9 @@ export default StyleSheet.create({
     width: 150,
   },
 })
+
+export const modalStyle = StyleSheet.create({
+  wrapper: {
+    backgroundColor: 'white',
+  },
+})
