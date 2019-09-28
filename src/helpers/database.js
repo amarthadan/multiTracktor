@@ -37,7 +37,7 @@ export const getEvent = async (eventId) => {
   return db.objectForPrimaryKey(NAMES.EVENT, eventId)
 }
 
-export const isEventOnDate = async (date) => {
+export const getEventByDate = async (date) => {
   const db = await openDB()
   const events = db.objects(NAMES.EVENT).filtered(
     'timestamp >= $0 AND timestamp <= $1',
@@ -45,7 +45,15 @@ export const isEventOnDate = async (date) => {
     getTime(endOfDay(date))
   )
 
-  return events.length >= 1
+  if (events.length) {
+    return events[0]
+  }
+
+  return null
+}
+
+export const isEventOnDate = (date) => {
+  return getEventByDate(date)
 }
 
 export const getEvents = async () => {
