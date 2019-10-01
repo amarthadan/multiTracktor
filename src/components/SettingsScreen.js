@@ -1,21 +1,25 @@
 import React, {useState} from 'react'
 import {View, Text, Picker} from 'react-native'
+import {useSelector} from 'react-redux'
 import Slider from '@react-native-community/slider'
 import {NavigationEvents} from 'react-navigation'
 
-import {TIME_PERIODS} from '../constants'
-import {useSettings, useStoreSettings} from '../hooks/settings'
+import {TIME_PERIODS, SETTINGS_KEYS} from '../constants'
+import {useStoreSettings} from '../hooks/settings'
+import {settingsGoalSelector, settingsTimePeriodSelector} from '../redux/selectors'
 
 const SettingsScreen = () => {
-  const settings = useSettings()
   const storeSettings = useStoreSettings()
-  const [timePeriod, setTimePeriod] = useState(settings['@time_period'])
-  const [goal, setGoal] = useState(Number(settings['@goal']))
+  const [timePeriod, setTimePeriod] = useState(useSelector(settingsTimePeriodSelector))
+  const [goal, setGoal] = useState(Number(useSelector(settingsGoalSelector)))
 
   return (
     <View>
       <NavigationEvents
-        onWillBlur={() => storeSettings({'@time_period': timePeriod, '@goal': `${goal}`})}
+        onWillBlur={() => storeSettings({
+          [SETTINGS_KEYS.TIME_PERIOD]: timePeriod,
+          [SETTINGS_KEYS.GOAL]: `${goal}`,
+        })}
       />
       <View>
         <Text>Time period:</Text>

@@ -1,16 +1,9 @@
 import {useEffect, useCallback} from 'react'
-import {useSelector, useDispatch} from 'react-redux'
+import {useDispatch} from 'react-redux'
 import AsyncStorage from '@react-native-community/async-storage'
 
-import {DEFAULT_SETTINGS} from '../constants'
-import {settingsSelector} from '../redux/selectors'
+import {DEFAULT_SETTINGS, SETTINGS_KEYS} from '../constants'
 import {settingsUpdated} from '../redux/actions'
-
-export const useSettings = () => {
-  const settings = useSelector(settingsSelector)
-
-  return settings
-}
 
 export const useStoreSettings = () => {
   const dispatch = useDispatch()
@@ -38,7 +31,7 @@ export const useInitializeSettings = () => {
       dispatch(settingsUpdated(Object.fromEntries(values)))
     }
 
-    AsyncStorage.getItem('@runned').then((item) => {
+    AsyncStorage.getItem(SETTINGS_KEYS.RUNNED).then((item) => {
       if (!item) {
         storeSettings(DEFAULT_SETTINGS)
       } else {

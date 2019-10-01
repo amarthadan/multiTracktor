@@ -7,10 +7,13 @@ export const buttonSize =
     Dimensions.get('window').height
   ) / 2
 
-export const gaugeWidth = 40
+export const gaugeWidth = 30
 
 export default StyleSheet.create({
-  innerButton: {
+  wrapper: {
+    alignItems: 'center',
+  },
+  button: {
     position: 'absolute',
     width: buttonSize,
     height: buttonSize,
@@ -20,12 +23,5 @@ export default StyleSheet.create({
     justifyContent: 'center',
     top: gaugeWidth,
     left: gaugeWidth,
-  },
-  mainButton: {
-    alignItems: 'center',
-    padding: 10,
-  },
-  buttonText: {
-    color: COLORS.primary.text,
   },
 })

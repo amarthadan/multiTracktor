@@ -52,13 +52,21 @@ export const getEventByDate = async (date) => {
   return null
 }
 
-export const isEventOnDate = (date) => {
-  return getEventByDate(date)
-}
+export const isEventOnDate = (date) => getEventByDate(date)
 
 export const getEvents = async () => {
   const db = await openDB()
   return db.objects(NAMES.EVENT)
+}
+
+export const countEventsBetweenDates = async (startDate, endDate) => {
+  const db = await openDB()
+
+  return db.objects(NAMES.EVENT).filtered(
+    'timestamp >= $0 AND timestamp <= $1',
+    getTime(startOfDay(startDate)),
+    getTime(endOfDay(endDate))
+  ).length
 }
 
 export const saveEvent = async (date, coordinates, placeName) => {
