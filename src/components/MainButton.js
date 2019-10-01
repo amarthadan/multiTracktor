@@ -1,35 +1,34 @@
-import React, {useState} from 'react'
+import React from 'react'
 import {TouchableOpacity, Text, View} from 'react-native'
+import {useNavigation} from 'react-navigation-hooks'
+import {AnimatedGaugeProgress} from 'react-native-simple-gauge'
 
-import {GaugeProgress} from 'react-native-simple-gauge'
-
-import styles, {buttonSize, gaugeWidth} from './MainButton.style'
 import {COLORS} from '../constants'
+import {MAIN} from '../navigation/routes'
+import {useStatus} from '../hooks/status'
 
-const percentage = (f, s) => f / s * 100 || 0
+import style, {buttonSize, gaugeWidth} from './MainButton.style'
 
-const MainButton = ({onPress}) => {
-  const all = 2
-  const [visited] = useState(1)
+const MainButton = () => {
+  const {navigate} = useNavigation()
+  const percentage = useStatus()
+
+  const openNewEvent = () => navigate(MAIN.NEW_EVENT)
 
   return (
-    <View style={styles.mainButton}>
-      <GaugeProgress
+    <View style={style.wrapper}>
+      <AnimatedGaugeProgress
         size={buttonSize + gaugeWidth * 2}
         width={gaugeWidth}
-        fill={percentage(visited, all)}
+        fill={percentage}
         cropDegree={180}
         tintColor={COLORS.secondary.normal}
         backgroundColor={COLORS.secondary.light}
-        strokeCap="circle"
       >
-        <TouchableOpacity
-          style={styles.innerButton}
-          onPress={onPress}
-        >
-          <Text style={styles.buttonText}>Main Button</Text>
+        <TouchableOpacity style={style.button} onPress={openNewEvent}>
+          <Text>Main Button</Text>
         </TouchableOpacity>
-      </GaugeProgress>
+      </AnimatedGaugeProgress>
     </View>
   )
 }

@@ -1,4 +1,8 @@
-export const settingsSelector = (state) => state.settings
+import {SETTINGS_KEYS} from '../constants'
+
+export const settingsGoalSelector = (state) => state.settings[SETTINGS_KEYS.GOAL]
+
+export const settingsTimePeriodSelector = (state) => state.settings[SETTINGS_KEYS.TIME_PERIOD]
 
 export const selectedCoordinatesSelector = (state) => state.newEvent.selectedCoordinates
 

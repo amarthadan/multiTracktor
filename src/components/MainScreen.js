@@ -16,7 +16,7 @@ const MainScreen = () => {
         <WeekOverview />
       </View>
       <View style={styles.mainButton}>
-        <MainButton onPress={() => navigate(MAIN.NEW_EVENT)} />
+        <MainButton />
       </View>
       <View>
         <TouchableOpacity onPress={() => navigate(MAIN.SETTINGS)}>

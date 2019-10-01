@@ -1,7 +1,13 @@
+export const SETTINGS_KEYS = {
+  RUNNED: '@runned',
+  TIME_PERIOD: '@time_period',
+  GOAL: '@goal',
+}
+
 export const DEFAULT_SETTINGS = {
-  '@runned': 'true',
-  '@time_period': '6',
-  '@goal': '18',
+  [SETTINGS_KEYS.RUNNED]: 'true',
+  [SETTINGS_KEYS.TIME_PERIOD]: '6',
+  [SETTINGS_KEYS.GOAL]: '18',
 }
 
 export const TIME_PERIODS = ['1', '3', '6', '12']
