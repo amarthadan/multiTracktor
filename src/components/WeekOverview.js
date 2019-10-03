@@ -1,8 +1,9 @@
 import React from 'react'
-import {View, Text, TouchableOpacity} from 'react-native'
+import {View, Text, TouchableOpacity, FlatList} from 'react-native'
 import {format} from 'date-fns'
 import {useNavigation} from 'react-navigation-hooks'
 
+import {INITIAL_NUMBER_OF_LIST_ITEMS} from '../constants'
 import {EVENTS} from '../navigation/routes'
 import {useEventByDate} from '../hooks/database'
 import {useCurrentWeek} from '../hooks/date'
@@ -11,7 +12,7 @@ import style, {rowStyle} from './WeekOverview.style'
 
 const WeekOverviewRow = ({date}) => {
   const {navigate} = useNavigation()
-  const dayName = format(date, 'EEE')
+  const day = format(date, 'EEE')
   const event = useEventByDate(date)
 
   // TODO: Fix back navigation
@@ -22,11 +23,11 @@ const WeekOverviewRow = ({date}) => {
       {
         event
           ? <TouchableOpacity style={rowStyle.row} onPress={openEvent}>
-            <Text>{dayName}:</Text>
+            <Text>{day}:</Text>
             <Text>{event.place.name}</Text>
           </TouchableOpacity>
           : <View>
-            <Text>{dayName}: -</Text>
+            <Text>{day}: -</Text>
           </View>
       }
     </View>
@@ -34,12 +35,16 @@ const WeekOverviewRow = ({date}) => {
 }
 
 const WeekOverview = () => {
-  const days = useCurrentWeek()
+  const dates = useCurrentWeek()
 
   return (
-    <View style={style.wrapper}>
-      {days.map((day) => <WeekOverviewRow date={day} key={day} />)}
-    </View>
+    <FlatList
+      data={dates}
+      renderItem={({item: date}) => <WeekOverviewRow date={date} />}
+      keyExtractor={(date) => `${date.getTime()}`}
+      initialNumToRender={INITIAL_NUMBER_OF_LIST_ITEMS}
+      style={style.wrapper}
+    />
   )
 }
 
