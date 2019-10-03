@@ -58,7 +58,7 @@ export const isEventOnDate = (date) => {
 
 export const getEvents = async () => {
   const db = await openDB()
-  return db.objects(NAMES.EVENT)
+  return db.objects(NAMES.EVENT).sorted('timestamp')
 }
 
 export const saveEvent = async (date, coordinates, placeName) => {
