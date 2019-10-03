@@ -35,3 +35,5 @@ export const ZOOM_LEVEL = {
 }
 
 export const POSITION_RADIUS = 100
+
+export const INITIAL_NUMBER_OF_LIST_ITEMS = 30
