@@ -20,9 +20,16 @@ const getInitialEventActions = () => (
   }
 )
 
+const getInitialEventExists = () => (
+  {
+    visible: false,
+  }
+)
+
 export const getInitilModals = () => (
   {
     eventActions: getInitialEventActions(),
+    eventExists: getInitialEventExists(),
   }
 )
 

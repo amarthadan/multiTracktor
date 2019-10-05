@@ -4,6 +4,7 @@ export const ACTIONS = {
   LOCATION_PERMISSION_GRANTED_CHANGED: 'Location permission granted changed',
   CURRENT_POSITION_UPDATED: 'Current position updated',
   EVENT_ACTIONS_MODAL_UPDATED: 'Event actions modal updated',
+  EVENT_EXISTS_MODAL_UPDATED: 'Event exists modal updated',
 }
 
 export const settingsUpdated = (settings) => (
@@ -47,5 +48,12 @@ export const eventActionsModalUpdated = (visible, eventId, modalId) => (
   {
     type: ACTIONS.EVENT_ACTIONS_MODAL_UPDATED,
     payload: {visible, eventId, modalId},
+  }
+)
+
+export const eventExistsModalUpdated = (visible) => (
+  {
+    type: ACTIONS.EVENT_EXISTS_MODAL_UPDATED,
+    payload: {visible},
   }
 )

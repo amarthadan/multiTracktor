@@ -1,17 +1,16 @@
-import React, {Fragment, useState} from 'react'
+import React, {useState} from 'react'
 import {View, TouchableOpacity, TextInput, Text} from 'react-native'
-import Modal from 'react-native-modal'
 import {useDispatch} from 'react-redux'
 import {useNavigation} from 'react-navigation-hooks'
 import DateTimePicker from 'react-native-modal-datetime-picker'
 import {format} from 'date-fns'
 
 import {MAIN} from '../navigation/routes'
-import {coordinatesSelected} from '../redux/actions'
+import {coordinatesSelected, eventExistsModalUpdated} from '../redux/actions'
 import {usePlace} from '../hooks/database'
 import {saveEvent, saveEventWithPlace, isEventOnDate} from '../helpers/database'
 
-import style, {modalStyle} from './NewEventButton.style'
+import style from './NewEventButton.style'
 
 const NewEventButton = ({coordinates, placeId, placeName}) => {
   const {navigate, goBack} = useNavigation()
@@ -19,7 +18,6 @@ const NewEventButton = ({coordinates, placeId, placeName}) => {
   const [dateTimePicker, setDateTimePicker] = useState(false)
   const [newPlaceName, setNewPlaceName] = useState('')
   const [date, setDate] = useState(new Date())
-  const [modalVisible, setModalVisible] = useState(false)
   const place = usePlace(placeId)
   const dispatch = useDispatch()
 
@@ -29,11 +27,10 @@ const NewEventButton = ({coordinates, placeId, placeName}) => {
     setDate(date)
     toggleDateTimePicker()
   }
-  const toggleModal = () => setModalVisible(!modalVisible)
 
   const onPress = async () => {
     if (await isEventOnDate(date)) {
-      toggleModal()
+      dispatch(eventExistsModalUpdated(true))
       return
     }
 
@@ -46,22 +43,21 @@ const NewEventButton = ({coordinates, placeId, placeName}) => {
   }
 
   return (
-    <Fragment>
-      <View style={style.wrapper}>
-        <View style={style.inputWrapper}>
-          <TouchableOpacity onPress={onPress}>
-            {
-              placeId
-                ? <Text>{placeName}</Text>
-                : <TextInput
-                  placeholder={'Place'}
-                  value={newPlaceName}
-                  onChangeText={setNewPlaceName}
-                  style={style.input}
-                />
-            }
-            {
-              moreOptions &&
+    <View style={style.wrapper}>
+      <View style={style.inputWrapper}>
+        <TouchableOpacity onPress={onPress}>
+          {
+            placeId
+              ? <Text>{placeName}</Text>
+              : <TextInput
+                placeholder={'Place'}
+                value={newPlaceName}
+                onChangeText={setNewPlaceName}
+                style={style.input}
+              />
+          }
+          {
+            moreOptions &&
               <View>
                 <TouchableOpacity onPress={toggleDateTimePicker}>
                   <Text>{format(date, 'dd.MM.yyyy HH:mm')}</Text>
@@ -81,27 +77,14 @@ const NewEventButton = ({coordinates, placeId, placeName}) => {
                   </TouchableOpacity>
                 }
               </View>
-            }
-          </TouchableOpacity>
-        </View>
-        <TouchableOpacity
-          onPress={toggleMoreOptions}
-          style={style.moreOptionsButton}
-        />
+          }
+        </TouchableOpacity>
       </View>
-      <Modal
-        isVisible={modalVisible}
-        onBackButtonPress={toggleModal}
-        onBackdropPress={toggleModal}
-      >
-        <View style={modalStyle.wrapper}>
-          <Text>Event already exists for selected date.</Text>
-          <TouchableOpacity onPress={toggleModal}>
-            <Text>Close</Text>
-          </TouchableOpacity>
-        </View>
-      </Modal>
-    </Fragment>
+      <TouchableOpacity
+        onPress={toggleMoreOptions}
+        style={style.moreOptionsButton}
+      />
+    </View>
   )
 }
 

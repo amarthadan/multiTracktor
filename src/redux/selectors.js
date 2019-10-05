@@ -11,3 +11,5 @@ export const locationPermissionsGrantedSelector = (state) => state.locationPermi
 export const currentPositionSelector = (state) => state.currentPosition
 
 export const eventActionsModalSelector = (state) => state.modals.eventActions
+
+export const eventExistsModalSelector = (state) => state.modals.eventExists
