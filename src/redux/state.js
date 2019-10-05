@@ -12,6 +12,20 @@ export const getInitialLocationPermissionsGranted = () => false
 
 export const getInitialCurrentPosition = () => null
 
+const getInitialEventActions = () => (
+  {
+    visible: false,
+    eventId: null,
+    modalId: null,
+  }
+)
+
+export const getInitilModals = () => (
+  {
+    eventActions: getInitialEventActions(),
+  }
+)
+
 export const getInitialState = () => (
   {
     settings: getInitialSettings(),
