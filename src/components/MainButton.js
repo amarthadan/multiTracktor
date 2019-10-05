@@ -5,13 +5,11 @@ import {AnimatedGaugeProgress} from 'react-native-simple-gauge'
 
 import {COLORS} from '../constants'
 import {MAIN} from '../navigation/routes'
-import {useStatus} from '../hooks/status'
 
 import style, {buttonSize, gaugeWidth} from './MainButton.style'
 
-const MainButton = () => {
+const MainButton = ({percentage}) => {
   const {navigate} = useNavigation()
-  const percentage = useStatus()
 
   const openNewEvent = () => navigate(MAIN.NEW_EVENT)
 
