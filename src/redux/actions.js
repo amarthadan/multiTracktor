@@ -3,6 +3,7 @@ export const ACTIONS = {
   COORDINATES_SELECTED: 'Coordinates selected',
   LOCATION_PERMISSION_GRANTED_CHANGED: 'Location permission granted changed',
   CURRENT_POSITION_UPDATED: 'Current position updated',
+  EVENT_ACTIONS_MODAL_UPDATED: 'Event actions modal updated',
 }
 
 export const settingsUpdated = (settings) => (
@@ -41,3 +42,10 @@ export const currentPositionUpdated = (position) => {
     payload: {latitude, longitude},
   }
 }
+
+export const eventActionsModalUpdated = (visible, eventId, modalId) => (
+  {
+    type: ACTIONS.EVENT_ACTIONS_MODAL_UPDATED,
+    payload: {visible, eventId, modalId},
+  }
+)

@@ -6,6 +6,7 @@ import {
   getInitialNewEvent,
   getInitialLocationPermissionsGranted,
   getInitialCurrentPosition,
+  getInitilModals,
 } from './state'
 
 const settingsReducer = (state = getInitialSettings(), action) => {
@@ -45,9 +46,19 @@ const currentPositionReducer = (state = getInitialCurrentPosition(), action) => 
   }
 }
 
+const modalsReducer = (state = getInitilModals(), action) => {
+  switch (action.type) {
+    case ACTIONS.EVENT_ACTIONS_MODAL_UPDATED:
+      return {...state, eventActions: {...state.eventActions, ...action.payload}}
+    default:
+      return state
+  }
+}
+
 export default combineReducers({
   settings: settingsReducer,
   newEvent: newEventReducer,
   locationPermissionsGranted: locationPermissionsGrantedReducer,
   currentPosition: currentPositionReducer,
+  modals: modalsReducer,
 })

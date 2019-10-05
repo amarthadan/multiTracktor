@@ -97,6 +97,13 @@ export const saveEventWithPlace = async (date, coordinates, place) => {
   })
 }
 
+export const deleteEvent = async (eventId) => {
+  const db = await openDB()
+  db.write(() => {
+    db.delete(db.objectForPrimaryKey(NAMES.EVENT, eventId))
+  })
+}
+
 export const getPlace = async (placeId) => {
   const db = await openDB()
   return db.objectForPrimaryKey(NAMES.PLACE, placeId)

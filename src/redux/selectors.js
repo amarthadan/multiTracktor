@@ -9,3 +9,5 @@ export const selectedCoordinatesSelector = (state) => state.newEvent.selectedCoo
 export const locationPermissionsGrantedSelector = (state) => state.locationPermissionsGranted
 
 export const currentPositionSelector = (state) => state.currentPosition
+
+export const eventActionsModalSelector = (state) => state.modals.eventActions
