@@ -5,7 +5,7 @@ import {format, parseISO} from 'date-fns'
 import {useNavigation} from 'react-navigation-hooks'
 import {useSelector, useDispatch} from 'react-redux'
 
-import {EVENTS} from '../navigation/routes'
+import {MAIN} from '../navigation/routes'
 import {getEvents, getEventByDate} from '../helpers/database'
 import {eventActionsModalSelector} from '../redux/selectors'
 import {eventActionsModalUpdated} from '../redux/actions'
@@ -36,7 +36,7 @@ const CalendarScreen = () => {
   const openEvent = async (dayData) => {
     const event = await selectEvent(dayData)
     if (event) {
-      navigate(EVENTS.EVENT, {eventId: event.id})
+      navigate(MAIN.EVENT, {eventId: event.id})
     }
   }
 

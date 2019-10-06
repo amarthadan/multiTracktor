@@ -4,7 +4,7 @@ import {format, startOfWeek, addDays, isSameDay} from 'date-fns'
 import {useNavigation} from 'react-navigation-hooks'
 
 import {INITIAL_NUMBER_OF_LIST_ITEMS} from '../constants'
-import {EVENTS} from '../navigation/routes'
+import {MAIN} from '../navigation/routes'
 
 import style, {rowStyle} from './WeekOverview.style'
 
@@ -13,7 +13,7 @@ const WeekOverviewRow = ({date, event}) => {
   const day = format(date, 'EEEE')
 
   // TODO: Fix back navigation
-  const openEvent = () => navigate(EVENTS.EVENT, {eventId: event.id})
+  const openEvent = () => navigate(MAIN.EVENT, {eventId: event.id})
 
   return (
     <View style={rowStyle.wrapper}>

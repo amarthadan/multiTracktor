@@ -3,7 +3,7 @@ import {TouchableOpacity, Text} from 'react-native'
 import {useNavigation} from 'react-navigation-hooks'
 import {useDispatch} from 'react-redux'
 
-import {EVENTS} from '../navigation/routes'
+import {MAIN} from '../navigation/routes'
 import {formatTimestamp} from '../helpers/formatting'
 import {eventActionsModalUpdated} from '../redux/actions'
 
@@ -13,7 +13,7 @@ const EventButton = ({id, place, timestamp, eventActionsModalId}) => {
   const {navigate} = useNavigation()
   const dispatch = useDispatch()
 
-  const openEvent = () => navigate(EVENTS.EVENT, {eventId: id})
+  const openEvent = () => navigate(MAIN.EVENT, {eventId: id})
   const openActions = () => dispatch(eventActionsModalUpdated(true, id, eventActionsModalId))
 
   return (

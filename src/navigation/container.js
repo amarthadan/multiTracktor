@@ -2,7 +2,7 @@ import {createAppContainer} from 'react-navigation'
 import {createMaterialTopTabNavigator} from 'react-navigation-tabs'
 import {createStackNavigator} from 'react-navigation-stack'
 
-import {ROOT, MAIN, EVENTS} from './routes'
+import {TAB, MAIN} from './routes'
 import MainScreen from '../components/MainScreen'
 import CalendarScreen from '../components/CalendarScreen'
 import SettingsScreen from '../components/SettingsScreen'
@@ -11,39 +11,32 @@ import EventScreen from '../components/EventScreen'
 import EventsScreen from '../components/EventsScreen'
 import SelectPlaceScreen from '../components/SelectPlaceScreen'
 
+const TabNavigator = createMaterialTopTabNavigator(
+  {
+    [TAB.MAIN]: MainScreen,
+    [TAB.CALENDAR]: CalendarScreen,
+    [TAB.EVENTS]: EventsScreen,
+  },
+  {
+    tabBarComponent: () => null,
+    initialRouteName: TAB.MAIN,
+    order: [TAB.EVENTS, TAB.MAIN, TAB.CALENDAR],
+  }
+)
+
 const MainNavigator = createStackNavigator({
-  [ROOT.MAIN]: {
-    screen: MainScreen,
-    navigationOptions: () => ({
-      header: null}),
+  [MAIN.TABS]: {
+    screen: TabNavigator,
+    navigationOptions: {
+      header: null,
+    },
   },
   [MAIN.SETTINGS]: SettingsScreen,
   [MAIN.NEW_EVENT]: NewEventScreen,
   [MAIN.SELECT_PLACE]: SelectPlaceScreen,
+  [MAIN.EVENT]: EventScreen,
 })
 
-const EventsNavigator = createStackNavigator({
-  [ROOT.Events]: {
-    screen: EventsScreen,
-    navigationOptions: () => ({
-      header: null}),
-  },
-  [EVENTS.EVENT]: EventScreen,
-})
-
-const RootNavigator = createMaterialTopTabNavigator(
-  {
-    [ROOT.MAIN]: MainNavigator,
-    [ROOT.CALENDAR]: CalendarScreen,
-    [ROOT.EVENTS]: EventsNavigator,
-  },
-  {
-    tabBarComponent: () => null,
-    initialRouteName: ROOT.MAIN,
-    order: [ROOT.EVENTS, ROOT.MAIN, ROOT.CALENDAR],
-  }
-)
-
-const AppContainer = createAppContainer(RootNavigator)
+const AppContainer = createAppContainer(MainNavigator)
 
 export default AppContainer
