@@ -59,15 +59,19 @@ export const getEvents = async () => {
   return db.objects(NAMES.EVENT).sorted('timestamp')
 }
 
-export const countEventsBetweenDates = async (startDate, endDate) => {
+export const getEventsBetweenDates = async (startDate, endDate) => {
   const db = await openDB()
 
   return db.objects(NAMES.EVENT).filtered(
     'timestamp >= $0 AND timestamp <= $1',
     getTime(startOfDay(startDate)),
     getTime(endOfDay(endDate))
-  ).length
+  )
 }
+
+export const countEventsBetweenDates = async (startDate, endDate) => (
+  (await getEventsBetweenDates(startDate, endDate)).length
+)
 
 export const saveEvent = async (date, coordinates, placeName) => {
   const db = await openDB()
