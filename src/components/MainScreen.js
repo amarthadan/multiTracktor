@@ -3,10 +3,12 @@ import {useSelector} from 'react-redux'
 import {View, TouchableOpacity, Text} from 'react-native'
 import {NavigationEvents} from 'react-navigation'
 import {useNavigation} from 'react-navigation-hooks'
+import {startOfWeek, endOfWeek} from 'date-fns'
 
 import {MAIN} from '../navigation/routes'
 import {settingsGoalSelector, settingsTimePeriodSelector} from '../redux/selectors'
 import {getStatus} from '../helpers/status'
+import {getEventsBetweenDates} from '../helpers/database'
 
 import WeekOverview from './WeekOverview'
 import MainButton from './MainButton'
@@ -18,8 +20,16 @@ const MainScreen = () => {
   const goal = useSelector(settingsGoalSelector)
   const timePeriod = useSelector(settingsTimePeriodSelector)
   const [percentage, setPercentage] = useState(0)
+  const [currentWeekEvents, setCurrentWeekEvents] = useState([])
 
   const refresh = useCallback(async () => {
+    const currentDate = new Date()
+    const events = await getEventsBetweenDates(
+      startOfWeek(currentDate, {weekStartsOn: 1}),
+      endOfWeek(currentDate, {weekStartsOn: 1})
+    )
+
+    setCurrentWeekEvents(events)
     setPercentage(await getStatus(goal, timePeriod))
   }, [goal, timePeriod])
 
@@ -34,7 +44,7 @@ const MainScreen = () => {
       />
       <View style={styles.mainView}>
         <View style={styles.weekOverview}>
-          <WeekOverview />
+          <WeekOverview events={currentWeekEvents} />
         </View>
         <View style={styles.mainButton}>
           <MainButton percentage={percentage} />

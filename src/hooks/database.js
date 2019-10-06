@@ -1,6 +1,6 @@
 import {useEffect, useState} from 'react'
 
-import {getEvent, getEventByDate, getPlace, getPlaces} from '../helpers/database'
+import {getEvent, getPlace, getPlaces} from '../helpers/database'
 import {distanceFromNearest} from '../helpers/maps'
 
 export const useEvent = (eventId) => {
@@ -13,20 +13,6 @@ export const useEvent = (eventId) => {
 
     loadEvent()
   }, [eventId])
-
-  return event
-}
-
-export const useEventByDate = (date) => {
-  const [event, setEvent] = useState(null)
-
-  useEffect(() => {
-    const loadEvent = async () => {
-      setEvent(await getEventByDate(date))
-    }
-
-    loadEvent()
-  }, [date])
 
   return event
 }
