@@ -17,6 +17,7 @@ const NewEventButton = ({coordinates, placeId, placeName}) => {
   const [moreOptions, setMoreOptions] = useState(false)
   const [dateTimePicker, setDateTimePicker] = useState(false)
   const [newPlaceName, setNewPlaceName] = useState('')
+  const [badPlaceName, setBadPlaceName] = useState(false)
   const [date, setDate] = useState(new Date())
   const place = usePlace(placeId)
   const dispatch = useDispatch()
@@ -34,12 +35,26 @@ const NewEventButton = ({coordinates, placeId, placeName}) => {
       return
     }
 
-    place
-      ? await saveEventWithPlace(date, coordinates, place)
-      : await saveEvent(date, coordinates, newPlaceName)
+    if (place) {
+      await saveEventWithPlace(date, coordinates, place)
+    } else {
+      if (!newPlaceName) {
+        setBadPlaceName(true)
+        return
+      }
+      await saveEvent(date, coordinates, newPlaceName)
+    }
 
     dispatch(coordinatesSelected(null))
     goBack()
+  }
+
+  const handleTextChange = (newText) => {
+    if (newText) {
+      setBadPlaceName(false)
+    }
+
+    setNewPlaceName(newText)
   }
 
   return (
@@ -52,8 +67,8 @@ const NewEventButton = ({coordinates, placeId, placeName}) => {
               : <TextInput
                 placeholder={'Place'}
                 value={newPlaceName}
-                onChangeText={setNewPlaceName}
-                style={style.input}
+                onChangeText={handleTextChange}
+                style={[style.input, badPlaceName && style.warning]}
               />
           }
           {

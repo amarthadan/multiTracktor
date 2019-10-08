@@ -16,10 +16,8 @@ export default StyleSheet.create({
   input: {
     width: 150,
   },
-})
-
-export const modalStyle = StyleSheet.create({
-  wrapper: {
-    backgroundColor: 'white',
+  warning: {
+    borderWidth: 1,
+    borderColor: 'red',
   },
 })
