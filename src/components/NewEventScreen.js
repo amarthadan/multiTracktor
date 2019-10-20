@@ -1,5 +1,5 @@
 import React, {Fragment} from 'react'
-import {FlatList} from 'react-native'
+import {FlatList, View} from 'react-native'
 import {useSelector} from 'react-redux'
 
 import {INITIAL_NUMBER_OF_LIST_ITEMS} from '../constants'
@@ -21,22 +21,22 @@ const NewEventScreen = () => {
 
   return (
     <Fragment>
-      <FlatList
-        data={places}
-        renderItem={({item: place}) =>
-          (<NewEventButton
-            placeId={place.id}
-            placeName={place.name}
-            coordinates={currentPosition}
-            key={place.id}
-          />)
-        }
-        keyExtractor={(place) => place.id}
-        initialNumToRender={INITIAL_NUMBER_OF_LIST_ITEMS}
-        ListFooterComponent={
-          () => <NewEventButton coordinates={selectedCoordinates || currentPosition} />
-        }
-      />
+      <View>
+        <FlatList
+          data={places}
+          renderItem={({item: place}) =>
+            (<NewEventButton
+              placeId={place.id}
+              placeName={place.name}
+              coordinates={currentPosition}
+              key={place.id}
+            />)
+          }
+          keyExtractor={(place) => place.id}
+          initialNumToRender={INITIAL_NUMBER_OF_LIST_ITEMS}
+        />
+        <NewEventButton coordinates={selectedCoordinates || currentPosition} />
+      </View>
       <EventExistsModal isVisible={eventExistsModalVisible} />
     </Fragment>
   )
