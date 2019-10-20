@@ -1,9 +1,11 @@
 import {useEffect, useState} from 'react'
 import {useSelector, useDispatch} from 'react-redux'
 import MapboxGL from '@react-native-mapbox-gl/maps'
+import {getDistance} from 'geolib'
 
+import {POSITION_UPDATE_RADIUS} from '../constants'
 import {currentPositionUpdated} from '../redux/actions'
-import {locationPermissionsGrantedSelector} from '../redux/selectors'
+import {locationPermissionsGrantedSelector, currentPositionSelector} from '../redux/selectors'
 
 export const useCurrentPosition = () => {
   const dispatch = useDispatch()
@@ -30,6 +32,7 @@ export const useCurrentPosition = () => {
 export const useUpdateCurrentPosition = () => {
   const dispatch = useDispatch()
   const locationPermisionsGranted = useSelector(locationPermissionsGrantedSelector)
+  const currentPosition = useSelector(currentPositionSelector)
 
   useEffect(() => {
     const locationManager = MapboxGL.locationManager
@@ -37,11 +40,16 @@ export const useUpdateCurrentPosition = () => {
     locationManager.start()
 
     if (locationPermisionsGranted) {
-      locationManager.addListener(
-        (position) => dispatch(currentPositionUpdated(position))
-      )
+      locationManager.addListener((position) => {
+        if (
+          !currentPosition
+          || getDistance(position.coords, currentPosition) >= POSITION_UPDATE_RADIUS
+        ) {
+          dispatch(currentPositionUpdated(position))
+        }
+      })
     }
-  }, [dispatch, locationPermisionsGranted])
+  }, [currentPosition, dispatch, locationPermisionsGranted])
 }
 
 export const useIpPosition = () => {
